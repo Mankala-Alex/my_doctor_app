@@ -1,0 +1,24 @@
+{
+    "emulator.emulatorPathWindows": "C:\\Users\\Maiprosoft\\AppData\\Local\\Android\\Sdk\\emulator",
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off"
+    },
+    "explorer.confirmPasteNative": false,
+    "workbench.startupEditor": "none",
+    "dart.projectSearchDepth": 10,
+    "workbench.editorAssociations": {
+        "*.zip": "default"
+    },
+    "git.autofetch": true,
+    "dart.debugExternalPackageLibraries": true,
+    "dart.debugSdkLibraries": false,
+    "workbench.settings.applyToAllProfiles": [],
+    "emulator.androidColdBoot": true
+}

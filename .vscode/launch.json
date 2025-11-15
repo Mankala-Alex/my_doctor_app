@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Dev",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=env/development.json"
+            ]
+        },
+        {
+            "name": "Stage",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=env/staging.json"
+            ]
+        },
+        {
+            "name": "Prod",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=env/production.json"
+            ]
+        },
+        {
+            "name": "My Doctor",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "My Doctor (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "My Doctor (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
