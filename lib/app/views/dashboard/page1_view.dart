@@ -1,176 +1,181 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:my_new_app/app/controllers/dashboard/dashboard_controller.dart';
 
-import '../../controllers/dashboard/dashboard_controller.dart';
+import '../../theme/app_theme.dart';
 
 class Page1View extends GetView<DashboardController> {
   const Page1View({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    final List<String> bannerImages = [
-      "assets/advertise/add1.png",
-      "assets/advertise/add2.png",
-      "assets/advertise/add3.png",
-    ];
+    final customTheme = CustomTheme.of(context);
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        height: screenHeight,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFA6B28B), Color(0xFFFFFFFF)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+      backgroundColor: const Color(0xFFF9FAFB),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ✅ Header (Logo + Notification)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.account_circle,
-                        color: Colors.white,
-                        size: 60,
-                      ),
-                      Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ),
-
-                // ✅ Search Bar
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: const TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search for products...",
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
-                        border: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                      ),
-                    ),
-                  ),
-                ),
-
                 const SizedBox(height: 20),
-
-                // ✅ Category Boxes
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // Location & Notification
+                Row(
                   children: [
-                    CustomBoxWidget(
-                      imagePath: "assets/category/image.png",
-                      label: "Essentials",
+                    const Icon(Icons.location_on_rounded,
+                        color: Colors.blue, size: 21),
+                    const SizedBox(width: 7),
+                    const Text(
+                      "New York, USA",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                     ),
-                    CustomBoxWidget(
-                      imagePath: "assets/category/natural.png",
-                      label: "Naturals",
-                    ),
-                    CustomBoxWidget(
-                      imagePath: "assets/category/beauty.png",
-                      label: "Beauty",
-                    ),
-                    CustomBoxWidget(
-                      imagePath: "assets/category/supplements.png",
-                      label: "Supplements",
-                    ),
+                    const Spacer(),
+                    Icon(Icons.notifications_none, color: Colors.grey.shade700),
                   ],
                 ),
-
-                const SizedBox(height: 30),
-                FlutterCarousel(
-                  options: FlutterCarouselOptions(
-                    height: 180,
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    viewportFraction: 0.85,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
-                    enableInfiniteScroll: true,
-                    showIndicator: true,
-                    slideIndicator: CircularSlideIndicator(
-                      slideIndicatorOptions: const SlideIndicatorOptions(
-                        currentIndicatorColor: Colors.black,
-                        indicatorBackgroundColor: Colors.white,
-                        indicatorRadius: 3,
-                        itemSpacing: 15,
-                        //indicatorBorderWidth: 1.5,
-                      ),
-                    ),
-                    floatingIndicator: true,
-                    clipBehavior: Clip.hardEdge,
-                    enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                const SizedBox(height: 20),
+                // Search Box
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
                   ),
-                  items: bannerImages.map((imagePath) {
-                    return Builder(
-                      builder: (context) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 6.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            image: DecorationImage(
-                              image: AssetImage(imagePath),
-                              fit: BoxFit.cover,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 12,
-                                offset: const Offset(0, 6),
-                                spreadRadius: 1,
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 11),
+                      icon: Icon(Icons.search, color: Colors.grey),
+                      hintText: 'Search for doctors, clinics, symptoms...',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 22),
+                // Promotion Card
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 1),
+                  child: Container(
+                    // decoration:
+                    //     BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.borderLightGrayLight, width: 1)),
+                    //color: const Color(0xFFFCE0D6),
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: FlutterCarousel(
+                      options: FlutterCarouselOptions(
+                        height:
+                            MediaQuery.of(context).size.height * 0.1, //95.0,
+                        showIndicator: true,
+                        slideIndicator: CircularSlideIndicator(
+                          slideIndicatorOptions: SlideIndicatorOptions(
+                            currentIndicatorColor: customTheme.primaryColor,
+                            indicatorBackgroundColor:
+                                CustomTheme.of(context).borderLightGray,
+                            indicatorRadius: 5,
+                            itemSpacing: 13,
+                          ),
+                        ),
+                        floatingIndicator: false,
+                        autoPlay: true,
+                        viewportFraction: 0.99,
+                      ),
+                      items: controller.advertisementList.map((img) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              foregroundDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                      color: AppColors.borderLightGrayLight,
+                                      width: 1)),
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(1),
+                              decoration: const BoxDecoration(
+                                  color: Colors.transparent),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Match the Container's border radius
+                                child: Image.asset(
+                                  // FIX: Pass 'img' (the asset path) here
+                                  img,
+                                  fit: BoxFit
+                                      .cover, // Ensures the image fills the area
+                                  width: double.infinity,
+                                ),
                               ),
-                            ],
-                          ),
-                          foregroundDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.center,
-                              colors: [
-                                Colors.black.withOpacity(0.3),
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
+                            );
+                          },
                         );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 22),
+                // Quick Actions
+                GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
+                  childAspectRatio: 2.45,
+                  children: [
+                    _quickActionCard(Icons.add, "Book Now", "Find a doctor"),
+                    _quickActionCard(Icons.calendar_today_rounded,
+                        "My Appointments", "Upcoming visits"),
+                    // _quickActionCard(Icons.folder_open, "View Records",
+                    //     "Your health history"),
+                    // _quickActionCard(Icons.videocam_outlined, "Video Consult",
+                    //     "Talk to a doctor"),
+                  ],
+                ),
+                const SizedBox(height: 27),
+                const Text(
+                  "Browse by Specialty",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
+                const SizedBox(height: 18),
+                GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 7,
+                  mainAxisSpacing: 17,
+                  childAspectRatio: .85,
+                  children: DashboardController.specialities.map((item) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Example navigation; replace route as needed
+                        Get.toNamed('/doctorList', arguments: {
+                          "categoryId": item['name'] ?? "",
+                          "title": item['name'] ?? "",
+                        });
                       },
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 26,
+                            backgroundColor: const Color(0xFFE5F0FF),
+                            child: SvgPicture.asset(item['icon'] ?? '',
+                                height: 28),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            item['name'] ?? '',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black87),
+                          ),
+                        ],
+                      ),
                     );
                   }).toList(),
                 ),
-
-                const SizedBox(height: 40),
               ],
             ),
           ),
@@ -178,53 +183,40 @@ class Page1View extends GetView<DashboardController> {
       ),
     );
   }
-}
 
-// ✅ Custom Box Widget
-class CustomBoxWidget extends StatelessWidget {
-  final String imagePath;
-  final String label;
-
-  const CustomBoxWidget({
-    super.key,
-    required this.imagePath,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 90,
-      height: 100,
-      decoration: BoxDecoration(
+  static Widget _quickActionCard(IconData icon, String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 5,
-            spreadRadius: 1,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            imagePath,
-            height: 40,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+        elevation: 0,
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(14),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+            child: Row(
+              children: [
+                Icon(icon, color: Colors.blue, size: 26),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 14),
+                      Text(subtitle,
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black54)),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

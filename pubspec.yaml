@@ -55,6 +55,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/departments/
     - assets/images/profile_page_images/
     - assets/images/patient_record/
     - assets/nodata/
