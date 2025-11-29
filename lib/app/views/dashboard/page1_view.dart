@@ -3,6 +3,7 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:my_new_app/app/controllers/dashboard/dashboard_controller.dart';
+import 'package:my_new_app/app/routes/app_routes.dart';
 
 import '../../theme/app_theme.dart';
 
@@ -14,7 +15,7 @@ class Page1View extends GetView<DashboardController> {
     final customTheme = CustomTheme.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: AppColors.bgLight,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -27,10 +28,10 @@ class Page1View extends GetView<DashboardController> {
                 Row(
                   children: [
                     const Icon(Icons.location_on_rounded,
-                        color: Colors.blue, size: 21),
+                        color: Colors.green, size: 21),
                     const SizedBox(width: 7),
                     const Text(
-                      "New York, USA",
+                      "Languar House",
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                     ),
@@ -42,17 +43,19 @@ class Page1View extends GetView<DashboardController> {
                 // Search Box
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 11),
-                      icon: Icon(Icons.search, color: Colors.grey),
-                      hintText: 'Search for doctors, clinics, symptoms...',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      border: Border.all(color: AppColors.borderGray)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        //contentPadding: EdgeInsets.all(20),
+                        icon: Icon(Icons.search, color: Colors.grey),
+                        hintText: 'Search for doctors, clinics, symptoms...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
@@ -69,7 +72,7 @@ class Page1View extends GetView<DashboardController> {
                     child: FlutterCarousel(
                       options: FlutterCarouselOptions(
                         height:
-                            MediaQuery.of(context).size.height * 0.1, //95.0,
+                            MediaQuery.of(context).size.height * 0.15, //95.0,
                         showIndicator: true,
                         slideIndicator: CircularSlideIndicator(
                           slideIndicatorOptions: SlideIndicatorOptions(
@@ -77,7 +80,7 @@ class Page1View extends GetView<DashboardController> {
                             indicatorBackgroundColor:
                                 CustomTheme.of(context).borderLightGray,
                             indicatorRadius: 5,
-                            itemSpacing: 13,
+                            itemSpacing: 15,
                           ),
                         ),
                         floatingIndicator: false,
@@ -87,25 +90,30 @@ class Page1View extends GetView<DashboardController> {
                       items: controller.advertisementList.map((img) {
                         return Builder(
                           builder: (BuildContext context) {
-                            return Container(
-                              foregroundDecoration: BoxDecoration(
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Container(
+                                foregroundDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                       color: AppColors.borderLightGrayLight,
-                                      width: 1)),
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(1),
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    12), // Match the Container's border radius
-                                child: Image.asset(
-                                  // FIX: Pass 'img' (the asset path) here
-                                  img,
-                                  fit: BoxFit
-                                      .cover, // Ensures the image fills the area
-                                  width: double.infinity,
+                                      width: 1),
+                                ),
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(1),
+                                decoration: const BoxDecoration(
+                                    color: Colors.transparent),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Match the Container's border radius
+                                  child: Image.asset(
+                                    // FIX: Pass 'img' (the asset path) here
+                                    img,
+                                    fit: BoxFit
+                                        .cover, // Ensures the image fills the area
+                                    width: double.infinity,
+                                  ),
                                 ),
                               ),
                             );
@@ -115,29 +123,54 @@ class Page1View extends GetView<DashboardController> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 22),
+                //const SizedBox(height: 22),
                 // Quick Actions
-                GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                  childAspectRatio: 2.45,
+                Row(
                   children: [
-                    _quickActionCard(Icons.add, "Book Now", "Find a doctor"),
-                    _quickActionCard(Icons.calendar_today_rounded,
-                        "My Appointments", "Upcoming visits"),
-                    // _quickActionCard(Icons.folder_open, "View Records",
-                    //     "Your health history"),
-                    // _quickActionCard(Icons.videocam_outlined, "Video Consult",
-                    //     "Talk to a doctor"),
+                    Expanded(
+                      child: quickActionCard(
+                        Icons.add,
+                        "Book Now",
+                      ),
+                    ),
+                    const SizedBox(width: 14), // spacing between cards
+                    Expanded(
+                      child: quickActionCard(
+                        Icons.calendar_today_rounded,
+                        "My Appointments",
+                      ),
+                    ),
                   ],
                 ),
+
                 const SizedBox(height: 27),
-                const Text(
-                  "Browse by Specialty",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Browse by Specialty",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.specialities);
+                      },
+                      child: const Text(
+                        "View All",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: AppColors.textDefaultLight),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.specialities);
+                        },
+                        icon: Icon(Icons.arrow_forward))
+                  ],
                 ),
                 const SizedBox(height: 18),
                 GridView.count(
@@ -151,16 +184,13 @@ class Page1View extends GetView<DashboardController> {
                     return GestureDetector(
                       onTap: () {
                         // Example navigation; replace route as needed
-                        Get.toNamed('/doctorList', arguments: {
-                          "categoryId": item['name'] ?? "",
-                          "title": item['name'] ?? "",
-                        });
+                        Get.toNamed(Routes.doctorslist);
                       },
                       child: Column(
                         children: [
                           CircleAvatar(
                             radius: 26,
-                            backgroundColor: const Color(0xFFE5F0FF),
+                            backgroundColor: AppColors.bgLight,
                             child: SvgPicture.asset(item['icon'] ?? '',
                                 height: 28),
                           ),
@@ -184,39 +214,37 @@ class Page1View extends GetView<DashboardController> {
     );
   }
 
-  static Widget _quickActionCard(IconData icon, String title, String subtitle) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+  static Widget quickActionCard(IconData icon, String title) {
+    return Container(
+      padding: const EdgeInsets.all(20), // ↓ reduced
+      decoration: BoxDecoration(
         color: Colors.white,
-        elevation: 0,
-        child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(14),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-            child: Row(
-              children: [
-                Icon(icon, color: Colors.blue, size: 26),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title,
-                          style: const TextStyle(fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 14),
-                      Text(subtitle,
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black54)),
-                    ],
-                  ),
-                ),
-              ],
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center, // ⭐ aligns vertically
+        children: [
+          Icon(icon, color: Colors.blue, size: 20), // ↓ reduced size
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14, // ↓ slightly reduced
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

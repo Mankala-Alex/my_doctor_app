@@ -71,7 +71,7 @@ class DashboardView extends GetView<DashboardController> {
                 unselectedItemColor: customTheme.textLightGray,
                 showUnselectedLabels: true,
                 selectedLabelStyle: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: const TextStyle(
@@ -81,9 +81,9 @@ class DashboardView extends GetView<DashboardController> {
                 items: List.generate(4, (index) {
                   List<String> labels = [
                     "home".tr,
-                    "page 2".tr,
-                    "page 3".tr,
-                    "page 4".tr,
+                    "Appointments".tr,
+                    "Reports".tr,
+                    "Profile".tr,
                   ];
                   List<String> icons = [
                     'assets/images/home.svg',

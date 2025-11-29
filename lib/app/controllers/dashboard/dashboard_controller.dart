@@ -8,10 +8,12 @@ class DashboardController extends GetxController {
   }
 
   final List<String> advertisementList = [
-    'assets/advertise/add1.png',
-    'assets/advertise/add2.png',
-    'assets/advertise/add3.png',
+    'assets/my_doc/add1.png',
+    'assets/my_doc/add2.png',
+    'assets/my_doc/add1.png',
   ];
+
+  //specialities block
 // Replace these with your actual SVG/icon asset paths
   static const List<Map<String, String>> specialities = [
     {'name': 'Cardiology', 'icon': 'assets/departments/Cardiology.svg'},

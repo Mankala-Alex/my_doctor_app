@@ -65,6 +65,7 @@ flutter:
     - assets/zetpure/logo/
     - assets/advertise/
     - assets/category/
+    - assets/my_doc/
 
   fonts:
     - family: Montserrat

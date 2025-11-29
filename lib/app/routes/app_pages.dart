@@ -1,5 +1,15 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:my_new_app/app/bindings/appointment/confirmation_page_binding.dart';
+import 'package:my_new_app/app/bindings/appointment/doctor_slot_binding.dart';
+import 'package:my_new_app/app/bindings/appointment/doctros_list_binding.dart';
+import 'package:my_new_app/app/bindings/appointment/payment_binding.dart';
+import 'package:my_new_app/app/bindings/appointment/specialities_binding.dart';
 import 'package:my_new_app/app/bindings/dashboard/dashboard_bindings.dart';
+import 'package:my_new_app/app/views/appointment/confirmation_page_view.dart';
+import 'package:my_new_app/app/views/appointment/doctor_list_view.dart';
+import 'package:my_new_app/app/views/appointment/doctor_slot_view.dart';
+import 'package:my_new_app/app/views/appointment/payment_view.dart';
+import 'package:my_new_app/app/views/appointment/specialities_view.dart';
 import 'package:my_new_app/app/views/dashboard/dashboard_view.dart';
 
 import '../bindings/auth/lang_selection_binding.dart';
@@ -43,6 +53,31 @@ class AppPages {
       name: Routes.dashboard,
       page: () => DashboardView(),
       binding: DashboardBindings(),
+    ),
+    GetPage(
+      name: Routes.specialities,
+      page: () => const SpecialitiesView(),
+      binding: SpecialitiesBinding(),
+    ),
+    GetPage(
+      name: Routes.doctorslist,
+      page: () => const DoctorListView(),
+      binding: DoctrosListBinding(),
+    ),
+    GetPage(
+      name: Routes.doctorslot,
+      page: () => const DoctorSlotsView(),
+      binding: DoctorSlotBinding(),
+    ),
+    GetPage(
+      name: Routes.paymentview,
+      page: () => const PaymentView(),
+      binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: Routes.confirmationpage,
+      page: () => const ConfirmationPageView(),
+      binding: ConfirmationPageBinding(),
     ),
   ];
 }

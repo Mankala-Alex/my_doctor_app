@@ -7,4 +7,9 @@ abstract class Routes {
 
   //dashboard
   static const dashboard = '/dashboard_view';
+  static const specialities = '/specialities';
+  static const doctorslist = '/doctors_list';
+  static const doctorslot = '/doctors_slot';
+  static const paymentview = '/payment_view';
+  static const confirmationpage = '/confirmation_page';
 }

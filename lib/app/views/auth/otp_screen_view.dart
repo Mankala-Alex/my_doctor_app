@@ -28,6 +28,18 @@ class _OtpScreenViewState extends State<OtpScreenView> {
     return PopScope(
       canPop: true,
       child: Scaffold(
+        backgroundColor: AppColors.bgLight,
+        appBar: AppBar(
+          backgroundColor: customTheme.bgColor,
+          elevation: 0,
+          title: Text(
+            "Account Verification",
+            style: textTheme.titleMedium?.copyWith(
+              color: customTheme.primaryColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
         body: SafeArea(
           top: false,
           child: Stack(
@@ -36,194 +48,179 @@ class _OtpScreenViewState extends State<OtpScreenView> {
                 slivers: [
                   SliverFillRemaining(
                     hasScrollBody: false,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: customTheme.bgColor,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: screenWidth * 0.14),
-                          SizedBox(height: screenWidth * 0.09),
-                          Text(
-                            "Account Verification",
-                            style: textTheme.titleMedium?.copyWith(
-                              color: customTheme.primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: screenWidth * 0.14),
+                        SizedBox(height: screenWidth * 0.09),
+                        Container(
+                          margin: const EdgeInsets.only(left: 20, right: 20),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.10,
+                            vertical: screenHeight * 0.03,
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 45),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.10,
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              children: [
-                                Row(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.bgBlackLight),
+                              borderRadius: BorderRadius.circular(20)),
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Enter OTP",
+                                    style: TextStyle(
+                                      color: customTheme.textLightGray,
+                                      fontSize: textTheme.bodySmall?.fontSize,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('OTP Resent'),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Resend OTP",
+                                      style: TextStyle(
+                                        color: customTheme.primaryColor,
+                                        fontSize: textTheme.bodySmall?.fontSize,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor:
+                                            customTheme.primaryColor,
+                                        decorationThickness: 2.5,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Pinput(
+                                  length: 6,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      otp = value;
+                                      isOtpValid = value.length == 6;
+                                    });
+                                  },
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Enter OTP",
-                                      style: TextStyle(
-                                        color: customTheme.textLightGray,
-                                        fontSize: textTheme.bodySmall?.fontSize,
-                                      ),
+                                  defaultPinTheme: PinTheme(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    width: screenWidth * 0.29,
+                                    height: screenHeight * 0.055,
+                                    textStyle: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.black,
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('OTP Resent'),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        "Resend OTP",
-                                        style: TextStyle(
-                                          color: customTheme.primaryColor,
-                                          fontSize:
-                                              textTheme.bodySmall?.fontSize,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor:
-                                              customTheme.primaryColor,
-                                          decorationThickness: 2.5,
-                                        ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: isOtpValid
+                                            ? customTheme.borderLightGray
+                                            : customTheme.errorColor,
                                       ),
+                                      borderRadius: BorderRadius.circular(18),
                                     ),
-                                  ],
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    width: screenWidth * 0.17,
+                                    height: screenHeight * 0.075,
+                                    textStyle: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.black,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: isOtpValid
+                                            ? customTheme.borderLightGray
+                                            : customTheme.errorColor,
+                                      ),
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                  ),
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Pinput(
-                                    length: 6,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        otp = value;
-                                        isOtpValid = value.length == 6;
-                                      });
+                              ),
+                              const CustomeFormVerticalGaps(),
+                              Row(
+                                children: [
+                                  Text(
+                                    maskedPhone,
+                                    style: TextStyle(
+                                      color: customTheme.textLightGray,
+                                      fontSize: textTheme.bodySmall?.fontSize,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Change mobile number tapped'),
+                                        ),
+                                      );
                                     },
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    defaultPinTheme: PinTheme(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      width: screenWidth * 0.17,
-                                      height: screenHeight * 0.055,
-                                      textStyle: const TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.black,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: isOtpValid
-                                              ? customTheme.borderLightGray
-                                              : customTheme.errorColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(18),
-                                      ),
-                                    ),
-                                    focusedPinTheme: PinTheme(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      width: screenWidth * 0.17,
-                                      height: screenHeight * 0.075,
-                                      textStyle: const TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.black,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: isOtpValid
-                                              ? customTheme.borderLightGray
-                                              : customTheme.errorColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(18),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const CustomeFormVerticalGaps(),
-                                Row(
-                                  children: [
-                                    Text(
-                                      maskedPhone,
-                                      style: TextStyle(
-                                        color: customTheme.textLightGray,
-                                        fontSize: textTheme.bodySmall?.fontSize,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Change mobile number tapped'),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        "Change Mobile Number",
-                                        style: TextStyle(
-                                          color: customTheme.primaryColor,
-                                          fontSize:
-                                              textTheme.bodySmall?.fontSize,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor:
-                                              customTheme.textLightGray,
-                                          decorationThickness: 2.5,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  margin:
-                                      EdgeInsets.only(top: screenHeight * 0.03),
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: otp.length == 6
-                                        ? () {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content:
-                                                    Text('OTP Submitted: $otp'),
-                                              ),
-                                            );
-                                            Get.toNamed(Routes.dashboard);
-                                          }
-                                        : null,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: otp.length == 6
-                                          ? customTheme.primaryColor
-                                          : customTheme.borderGray,
-                                    ),
                                     child: Text(
-                                      "Continue",
+                                      "Change Mobile Number",
                                       style: TextStyle(
-                                        color: otp.length == 6
-                                            ? Colors.white
-                                            : Colors.black,
+                                        color: customTheme.primaryColor,
+                                        fontSize: textTheme.bodySmall?.fontSize,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor:
+                                            customTheme.textLightGray,
+                                        decorationThickness: 2.5,
                                       ),
                                     ),
                                   ),
+                                ],
+                              ),
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: screenHeight * 0.03),
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: otp.length == 6
+                                      ? () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content:
+                                                  Text('OTP Submitted: $otp'),
+                                            ),
+                                          );
+                                          Get.toNamed(Routes.dashboard);
+                                        }
+                                      : null,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: otp.length == 6
+                                        ? customTheme.primaryColor
+                                        : customTheme.borderGray,
+                                  ),
+                                  child: Text(
+                                    "Continue",
+                                    style: TextStyle(
+                                      color: otp.length == 6
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
